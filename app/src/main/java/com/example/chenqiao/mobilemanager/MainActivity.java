@@ -35,6 +35,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
+        tv_home_welcome = (TextView) findViewById(R.id.tv_home_welcome);
+        tv_home_welcome.setText("欢迎您,新用户,我们的应用可以保卫您手机的安全！");
+
         gv_home_content = (GridView) findViewById(R.id.gv_home_content);
         gv_home_content.setAdapter(new BaseAdapter() {
             @Override

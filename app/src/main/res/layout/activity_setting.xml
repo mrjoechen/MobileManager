@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:settingitem="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="com.example.chenqiao.mobilemanager.SettingActivity">
+    <TextView
+        style="@style/myPageTile"
+        android:text="设置中心"
+        />
+    <com.example.chenqiao.view.SettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/si_setting_update"
+        settingitem:itemtitle="自动更新"
+        settingitem:on_string="自动更新开启"
+        settingitem:off_string="自动更新关闭"
+        settingitem:sp_keyname="autoupdate"/>
+    <com.example.chenqiao.view.SettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/si_setting_showposition"
+        settingitem:itemtitle="显示来电归属地"
+        settingitem:on_string="显示来电归属地已开启"
+        settingitem:off_string="显示来电归属地已关闭"
+        settingitem:sp_keyname="showposition"/>
 
-</RelativeLayout>
+</LinearLayout>

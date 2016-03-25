@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.example.chenqiao.application.MyApplication;
 import com.example.chenqiao.utils.StreamToString;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -197,7 +199,7 @@ public class SplashActivity extends ActionBarActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String path = "http://192.168.3.10:8080/Test/MobileManager/Version.json";
+                String path = MyApplication.SERVER_PATH+"/Version.json";
                 try {
                 //(1) 创建一个url对象 参数就是网址
                 URL url = new URL(path);

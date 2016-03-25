@@ -8,7 +8,6 @@
     <TextView
         style="@style/myPageTile"
         android:text="功能列表"
-        android:textColor="#ffffff"
         />
     <com.example.chenqiao.view.MyTextView
         android:layout_width="match_parent"
