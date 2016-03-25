@@ -63,6 +63,9 @@ public class SplashActivity extends ActionBarActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
+        //隐藏标题栏
+        getSupportActionBar().hide();
+
         packageManager = getPackageManager();
         current_versionName = getVersionName();
         current_versionCode = getVersionCode();
@@ -77,6 +80,7 @@ public class SplashActivity extends ActionBarActivity {
             //若网络可用，检测版本更新，从服务器获取json判断和本地的版本信息
 
                 getNewVersion();
+
         }
 
     }
