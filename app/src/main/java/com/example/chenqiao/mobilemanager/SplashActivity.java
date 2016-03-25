@@ -150,11 +150,17 @@ public class SplashActivity extends ActionBarActivity {
                 ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick (DialogInterface dialog,int which){
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                enterhome();
             }}).
                 show();
     }
 
+
+    public void enterhome(){
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        finish();
+
+    }
 
 
     //获取当前版本名
@@ -187,7 +193,7 @@ public class SplashActivity extends ActionBarActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String path = "http://192.168.232.1:8080/Test/MobileManager/Version.json";
+                String path = "http://192.168.3.10:8080/Test/MobileManager/Version.json";
                 try {
                 //(1) 创建一个url对象 参数就是网址
                 URL url = new URL(path);
