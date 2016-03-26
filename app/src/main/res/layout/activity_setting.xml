@@ -8,7 +8,7 @@
     tools:context="com.example.chenqiao.mobilemanager.SettingActivity">
     <TextView
         style="@style/myPageTile"
-        android:text="设置中心"
+        android:text="@string/setting_title"
         />
     <com.example.chenqiao.view.SettingItem
         android:layout_width="match_parent"

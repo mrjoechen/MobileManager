@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Mobile Manager</string>
+    <string name="setting_title">设置中心</string>
+    <string name="main_title">功能列表</string>
 </resources>

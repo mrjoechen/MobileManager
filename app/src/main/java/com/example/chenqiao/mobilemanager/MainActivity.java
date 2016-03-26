@@ -1,25 +1,30 @@
 package com.example.chenqiao.mobilemanager;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends ActionBarActivity {
+import com.example.chenqiao.application.MyApplication;
+import com.example.chenqiao.utils.Md5Utils;
+
+public class MainActivity extends Activity {
 
     private static final int CONTENT_NUM = 9 ;
     private GridView gv_home_content;
 
 
 
-    private int[] iconarray ={R.drawable.safe,R.drawable.callmsgsafe,R.drawable.app
+    private int[] iconarray ={R.drawable.safe,R.drawable.callmsgsafe,R.drawable.appmanager
             ,    R.drawable.taskmanager,R.drawable.netmanager,R.drawable.trojan,
             R.drawable.sysoptimize,R.drawable.atools,R.drawable.settings};
 
@@ -33,10 +38,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+
 
         tv_home_welcome = (TextView) findViewById(R.id.tv_home_welcome);
-        tv_home_welcome.setText("欢迎您,新用户,我们的应用可以保卫您手机的安全！");
+        tv_home_welcome.setText("天气情况：");
 
         gv_home_content = (GridView) findViewById(R.id.gv_home_content);
         gv_home_content.setAdapter(new BaseAdapter() {
@@ -73,12 +78,20 @@ public class MainActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 0:
-                        Toast.makeText(MainActivity.this, titles[position], Toast.LENGTH_SHORT).show();
-
+//                        Toast.makeText(MainActivity.this, titles[position], Toast.LENGTH_SHORT).show();
+                        String safe_pwd = MyApplication.config_sp.getString("safe_pwd", "");
+                        if (safe_pwd.isEmpty()){
+                            //如果配置信息中安全密码为空，则弹出设置密码对话框
+                            showSetpwdDialog();
+                        }
+                        else
+                        {
+                            //如果已经设置过密码，弹出输入密码对话框
+                            showinputpwdDialog();
+                        }
                         break;
                     case 1:
                         Toast.makeText(MainActivity.this,titles[position],Toast.LENGTH_SHORT).show();
-
                         break;
                     case 2:
                         Toast.makeText(MainActivity.this,titles[position],Toast.LENGTH_SHORT).show();
@@ -103,6 +116,81 @@ public class MainActivity extends ActionBarActivity {
                         startActivity(new Intent(MainActivity.this, SettingActivity.class));
                         break;
                 }
+            }
+        });
+
+
+    }
+
+    //设置安全密码
+    private void showSetpwdDialog() {
+
+        View view = View.inflate(this, R.layout.setpwd_dialog, null);
+        final EditText et_setpwddialog_input = (EditText) view.findViewById(R.id.et_setpwddialog_input);
+        final EditText  et_setpwddialog_confirm = (EditText) view.findViewById(R.id.et_setpwddialog_confirm);
+        final AlertDialog setpwd_alertDialog = new AlertDialog.Builder(this).setTitle("请设置密码").setView(view).create();
+        setpwd_alertDialog.show();
+
+        view.findViewById(R.id.bt_setpwddialog_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputpwd = et_setpwddialog_input.getText().toString();
+                String confirmpwd = et_setpwddialog_confirm.getText().toString();
+
+                if (!inputpwd.isEmpty() & !confirmpwd.isEmpty()) {
+                    if (inputpwd.equals(confirmpwd)) {
+                        MyApplication.saveConfig("safe_pwd", Md5Utils.getMd5Digest(inputpwd));
+                        setpwd_alertDialog.dismiss();
+                    } else {
+                        Toast.makeText(MainActivity.this, "密码不一致！", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+
+                    Toast.makeText(MainActivity.this, "密码不能为空!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        view.findViewById(R.id.bt_setpwddialog_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setpwd_alertDialog.dismiss();
+            }
+        });
+
+    }
+
+
+    //输入密码，检查与配置信息是否匹配
+    private void showinputpwdDialog() {
+
+        View view = View.inflate(this, R.layout.inputpwd_dialog,null);
+        final EditText et_inputdialog_input = (EditText) view.findViewById(R.id.et_inputdialog_inputpwd);
+        final AlertDialog inputpwd_alertDialog = new AlertDialog.Builder(this).setTitle("请输入密码").setView(view).create();
+        inputpwd_alertDialog.show();
+        view.findViewById(R.id.bt_inputpwddialog_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!et_inputdialog_input.getText().toString().isEmpty()){
+
+                    if(Md5Utils.getMd5Digest(MyApplication.config_sp.getString("safe_pwd","")).equals(et_inputdialog_input.getText().toString())){
+                        inputpwd_alertDialog.dismiss();
+                        startActivity(new Intent(MainActivity.this,PhoneSafeActivity.class));
+                    }else {
+                        Toast.makeText(MainActivity.this, "密码错误，请重新输入", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else {
+                    Toast.makeText(MainActivity.this, "密码不能为空", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        view.findViewById(R.id.bt_inputpwddialog_cancle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputpwd_alertDialog.dismiss();
             }
         });
 

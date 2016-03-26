@@ -15,7 +15,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -34,8 +33,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SplashActivity extends ActionBarActivity {
+public class SplashActivity extends Activity {
 
+    private static final int MSG_ERROR_INTERSEVER = -1;
     final int OK = 1;
     private String current_versionName;
     private int  current_versionCode;
@@ -47,14 +47,26 @@ public class SplashActivity extends ActionBarActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            String[] info_string = (String[]) msg.obj;
-            String version_name = info_string[0];
-            String version_code = info_string[1];
-            String version_description = info_string[2];
-            String download_url = info_string[3];
-            if(Float.parseFloat(version_code)>current_versionCode){
-                update(info_string);
+
+            switch (msg.what){
+
+                case OK:
+                    String[] info_string = (String[]) msg.obj;
+                    String version_name = info_string[0];
+                    String version_code = info_string[1];
+                    String version_description = info_string[2];
+                    String download_url = info_string[3];
+                    if(Float.parseFloat(version_code)>current_versionCode){
+                        update(info_string);
+                    }
+                    break;
+                case MSG_ERROR_INTERSEVER :
+                    Toast.makeText(SplashActivity.this,"网络错误",Toast.LENGTH_LONG).show();
+                    enterhome();
+                    break;
+
             }
+
         }
     };
 
@@ -65,27 +77,40 @@ public class SplashActivity extends ActionBarActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
-        //隐藏标题栏
-        getSupportActionBar().hide();
 
         packageManager = getPackageManager();
         current_versionName = getVersionName();
         current_versionCode = getVersionCode();
 
 
-        if (!isNetworkAvailable(SplashActivity.this)) {
+        if (!isNetworkAvailable(SplashActivity.this)&MyApplication.config_sp.getBoolean("autoupdate",true)) {
             //如果没有可用网络则直接进入mainactivity
             Toast.makeText(getApplicationContext(), "当前无可用网络", Toast.LENGTH_LONG).show();
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         } else {
-            //若网络可用，检测版本更新，从服务器获取json判断和本地的版本信息
-
+                //若网络可用且自动更新已开启，检测版本更新，从服务器获取json判断和本地的版本信息
+            if(MyApplication.config_sp.getBoolean("autoupdate",true))
                 getNewVersion();
+            else {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        enterhome();
+                        finish();
+                    }
 
+                }).start();
+
+            }
         }
-
     }
+
 
     //判断当前网络状态
     public boolean isNetworkAvailable(Activity activity) {
@@ -116,11 +141,9 @@ public class SplashActivity extends ActionBarActivity {
         }
         return false;
     }
-
-
     private void update(final String[] info_string) {
 
-        new AlertDialog.Builder(this).setTitle("检查更新：").setMessage("发现新版本：\n" + "版本名：" + info_string[0] + "\n版本号" + info_string[1] + "\n新版本特性：" + info_string[2])
+        new AlertDialog.Builder(this).setTitle("发现新版本").setMessage( "版本名：" +"\n"+ info_string[0] + "\n版本号;" +"\n"+ info_string[1] + "\n新版本特性：" +"\n"+ info_string[2])
                 .setPositiveButton("更新", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -143,19 +166,19 @@ public class SplashActivity extends ActionBarActivity {
                                             e.printStackTrace();
                                         }
                                     }
-
                                     @Override
                                     public void onFailure(int statusCode, Header[] headers,
                                                           byte[] responseBody, Throwable error) {
                                         super.onFailure(statusCode, headers, responseBody, error);
                                         Toast.makeText(SplashActivity.this, "下载失败", Toast.LENGTH_SHORT).show();
+                                        enterhome();
                                     }
                                 });
                             }
                         }
                 ).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick (DialogInterface dialog,int which){
+            public void onClick(DialogInterface dialog, int which) {
                 enterhome();
             }}).
                 show();
@@ -212,7 +235,7 @@ public class SplashActivity extends ActionBarActivity {
                 conn.setConnectTimeout(5000);
                 //(5)获取服务器返回的状态码
                 int code = conn.getResponseCode();
-                    conn.connect();
+                conn.connect();
                 if (code == 200){
                     //获取服务器返回的数据流
                     InputStream inputStream = conn.getInputStream();
@@ -228,13 +251,20 @@ public class SplashActivity extends ActionBarActivity {
                     msg.obj = info_string;
                     msg.what = OK;
                     handler.sendMessage(msg);
+                }else {
+
+                    if (code==500){
+                        Message msg = Message.obtain();
+                        msg.what=MSG_ERROR_INTERSEVER;
+                        handler.sendMessage(msg);
+                    }
+
                 }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
 
             }
         }).start();
