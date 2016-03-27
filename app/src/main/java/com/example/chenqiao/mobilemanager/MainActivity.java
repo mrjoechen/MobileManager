@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 if(!et_inputdialog_input.getText().toString().isEmpty()){
 
-                    if(Md5Utils.getMd5Digest(MyApplication.config_sp.getString("safe_pwd","")).equals(et_inputdialog_input.getText().toString())){
+                    if(MyApplication.config_sp.getString("safe_pwd","").equals(Md5Utils.getMd5Digest(et_inputdialog_input.getText().toString()))){
                         inputpwd_alertDialog.dismiss();
                         startActivity(new Intent(MainActivity.this,PhoneSafeActivity.class));
                     }else {

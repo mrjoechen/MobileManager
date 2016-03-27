@@ -11,7 +11,7 @@ public class MyApplication extends Application{
 
 
 
-    public static String SERVER_PATH = "http://192.168.3.16:8080/Test/MobileManager";
+    public static String SERVER_PATH = "http://192.168.3.5:8080/Test/MobileManager";
     public static SharedPreferences config_sp ;
     private static SharedPreferences.Editor editor;
 

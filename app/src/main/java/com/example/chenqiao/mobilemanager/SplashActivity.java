@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -36,6 +38,8 @@ import java.net.URL;
 public class SplashActivity extends Activity {
 
     private static final int MSG_ERROR_INTERSEVER = -1;
+    private static final int MSG_ERROR_IO = -2;
+    private static final int MSG_ERROR_JSON = -3;
     final int OK = 1;
     private String current_versionName;
     private int  current_versionCode;
@@ -61,7 +65,15 @@ public class SplashActivity extends Activity {
                     }
                     break;
                 case MSG_ERROR_INTERSEVER :
-                    Toast.makeText(SplashActivity.this,"网络错误",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SplashActivity.this,"MSG_ERROR_INTERSEVER",Toast.LENGTH_LONG).show();
+                    enterhome();
+                    break;
+                case MSG_ERROR_IO :
+                    Toast.makeText(SplashActivity.this,"MSG_ERROR_IO",Toast.LENGTH_LONG).show();
+                    enterhome();
+                    break;
+                case MSG_ERROR_JSON :
+                    Toast.makeText(SplashActivity.this,"MSG_ERROR_JSON",Toast.LENGTH_LONG).show();
                     enterhome();
                     break;
 
@@ -143,7 +155,7 @@ public class SplashActivity extends Activity {
     }
     private void update(final String[] info_string) {
 
-        new AlertDialog.Builder(this).setTitle("发现新版本").setMessage( "版本名：" +"\n"+ info_string[0] + "\n版本号;" +"\n"+ info_string[1] + "\n新版本特性：" +"\n"+ info_string[2])
+        new AlertDialog.Builder(this).setTitle("发现新版本").setMessage("版本名：" + "\n" + info_string[0] + "\n版本号;" + "\n" + info_string[1] + "\n新版本特性：" + "\n" + info_string[2])
                 .setPositiveButton("更新", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -180,17 +192,19 @@ public class SplashActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 enterhome();
-            }}).
-                show();
+            }
+        }).setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                enterhome();
+            }
+        }).show();
     }
-
 
     public void enterhome(){
         startActivity(new Intent(SplashActivity.this, MainActivity.class));
         finish();
-
     }
-
 
     //获取当前版本名
     public String getVersionName() {
@@ -222,9 +236,10 @@ public class SplashActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                Message msg = Message.obtain();
                 String path = MyApplication.SERVER_PATH+"/Version.json";
                 try {
-                //(1) 创建一个url对象 参数就是网址
+                //(1) 创建一个url对象 参数网址
                 URL url = new URL(path);
                 //(2)获取HttpURLConnection 链接对象
                 HttpURLConnection conn = null;
@@ -246,24 +261,29 @@ public class SplashActivity extends Activity {
                     String version_code = jsonObject.getString("version_code");
                     String version_description = jsonObject.getString("version_description");
                     String download_url = jsonObject.getString("download_url");
-                    Message msg = Message.obtain();
+
                     String[] info_string = {version_name,version_code,version_description,download_url};
                     msg.obj = info_string;
                     msg.what = OK;
-                    handler.sendMessage(msg);
                 }else {
 
                     if (code==500){
-                        Message msg = Message.obtain();
                         msg.what=MSG_ERROR_INTERSEVER;
                         handler.sendMessage(msg);
                     }
 
                 }
                 } catch (IOException e) {
+                   msg.what = MSG_ERROR_IO;
+                    e.printStackTrace();
+                }  catch (JSONException e) {
+                    msg.what = MSG_ERROR_JSON;
                     e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
+
+                } finally {
+                    handler.sendMessage(msg);
                 }
 
             }
