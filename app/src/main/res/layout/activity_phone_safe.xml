@@ -1,12 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="com.example.chenqiao.mobilemanager.PhoneSafeActivity">
 
-</RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/myPageTile"
+        android:text="@string/phonesafe"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="安全号码:"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123456789"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:id="@+id/tv_phonesafe_safenum"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="防盗保护是否开启:"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"/>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/unlock"
+            android:layout_marginRight="10dp"
+            android:id="@+id/iv_phonesafe_enalbe"/>
+
+    </LinearLayout>
+
+    <Button
+        android:background="@drawable/bt_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/resetup"
+        android:onClick="resetup"
+        android:padding="5dp"
+        android:textColor="#ffffff"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/functon_intro"
+        android:padding="4dp"
+        android:textSize="20sp"/>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="@string/sim_change"/>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="@string/play_alarm"/>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="@string/trace_position"/>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="@string/wipedata"/>
+    <TextView
+        style="@style/mysetuptext"
+        android:text="@string/remote_lock"/>
+
+</LinearLayout>

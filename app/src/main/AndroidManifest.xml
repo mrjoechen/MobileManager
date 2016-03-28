@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name="com.example.chenqiao.application.MyApplication"
@@ -23,8 +28,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingActivity" />
-        <activity android:name=".SafeActivity" />
-        <activity android:name=".PhoneSafeActivity"></activity>
+        <activity android:name=".PhoneSafeActivity" />
+        <activity android:name=".Setup1Activity" />
+        <activity android:name=".Setup2Activity" />
+        <activity android:name=".Setup3Activity" />
+        <activity android:name=".Setup4Activity"></activity>
     </application>
 
 </manifest>

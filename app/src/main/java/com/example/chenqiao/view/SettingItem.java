@@ -1,7 +1,6 @@
 package com.example.chenqiao.view;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +14,8 @@ import com.example.chenqiao.mobilemanager.R;
 /**
  * Created by CHENQIAO on 2016/3/25.
  */
-public class SettingItem extends RelativeLayout {
+public class SettingItem extends RelativeLayout{
+
 
 
     private CheckBox cb_setting_status;
@@ -26,13 +26,15 @@ public class SettingItem extends RelativeLayout {
     private String off_string;
     private String sp_keyname;
     private String TAG = "SettingItem";
+    private MyOnclickListen mylistener;
+
+
 
 
     public SettingItem(Context context) {
         super(context);
         initial(null);
     }
-
 
 
     public SettingItem(Context context, AttributeSet attrs) {
@@ -81,6 +83,9 @@ public class SettingItem extends RelativeLayout {
 //                    editor.putBoolean(sp_keyname,false);
 //                    editor.commit();
                     MyApplication.saveConfig(sp_keyname,false);
+                    if (mylistener!=null){
+                        mylistener.myCancleOnclick();
+                    }
                 }
                 else {
                     cb_setting_status.setChecked(true);
@@ -89,10 +94,24 @@ public class SettingItem extends RelativeLayout {
 //                    editor.putBoolean(sp_keyname, true);
 //                    editor.commit();
                     MyApplication.saveConfig(sp_keyname,true);
+                    if (mylistener!=null){
+                        mylistener.myCheckOnclick();
+                    }
 
                 }
             }
         });
+    }
+
+
+    public interface MyOnclickListen{
+        void  myCheckOnclick();
+        void  myCancleOnclick();
+    }
+
+    public void  setMyOnclickListenr (MyOnclickListen listener){
+        mylistener = listener;
+
     }
 
 }

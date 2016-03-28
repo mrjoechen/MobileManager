@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -21,7 +22,6 @@ public class MainActivity extends Activity {
 
     private static final int CONTENT_NUM = 9 ;
     private GridView gv_home_content;
-
 
 
     private int[] iconarray ={R.drawable.safe,R.drawable.callmsgsafe,R.drawable.appmanager
@@ -129,6 +129,22 @@ public class MainActivity extends Activity {
         final EditText et_setpwddialog_input = (EditText) view.findViewById(R.id.et_setpwddialog_input);
         final EditText  et_setpwddialog_confirm = (EditText) view.findViewById(R.id.et_setpwddialog_confirm);
         final AlertDialog setpwd_alertDialog = new AlertDialog.Builder(this).setTitle("请设置密码").setView(view).create();
+        et_setpwddialog_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    setpwd_alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+        et_setpwddialog_confirm.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    setpwd_alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
         setpwd_alertDialog.show();
 
         view.findViewById(R.id.bt_setpwddialog_confirm).setOnClickListener(new View.OnClickListener() {
@@ -169,6 +185,14 @@ public class MainActivity extends Activity {
         final EditText et_inputdialog_input = (EditText) view.findViewById(R.id.et_inputdialog_inputpwd);
         final AlertDialog inputpwd_alertDialog = new AlertDialog.Builder(this).setTitle("请输入密码").setView(view).create();
         inputpwd_alertDialog.show();
+        et_inputdialog_input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    inputpwd_alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
         view.findViewById(R.id.bt_inputpwddialog_confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
