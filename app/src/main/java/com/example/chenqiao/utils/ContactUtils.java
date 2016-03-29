@@ -52,7 +52,6 @@ public class ContactUtils {
 
         }
 
-
         return contactslist;
 
     }

@@ -8,7 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public abstract class BaseActivity extends ActionBarActivity {
-    //系统提供给我们的用于滑动手势检测的类
+    //手势检测
     GestureDetector gestureDetector;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +29,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
-        public boolean onFling(
-                MotionEvent e1, //包含了改fling的起点
-                MotionEvent e2, //包含了改fling的终点
-                float velocityX,
-                float velocityY) {//快速在屏幕上滑动的时候，会call到该callback
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 
             float startx = e1.getX();
             float starty = e1.getY();

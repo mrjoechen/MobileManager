@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name="com.example.chenqiao.application.MyApplication"
@@ -28,19 +28,54 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".PhoneSafeActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".Setup1Activity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".Setup2Activity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".Setup3Activity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".Setup4Activity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".ContactListActivity"/>
+        <activity
+            android:name=".SettingActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".PhoneSafeActivity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".Setup1Activity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".Setup2Activity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".Setup3Activity"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".Setup4Activity"
+            android:launchMode="singleTask" />
+        <activity android:name=".ContactListActivity" />
+
+        <receiver
+            android:name="com.example.chenqiao.receiver.MyBootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.example.chenqiao.receiver.MySmsReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.example.chenqiao.service.MyNumberLocationService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name="com.example.chenqiao.service.MyUpdateLocationService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity android:name=".AdvanceToolActivity" />
+        <activity android:name=".QueryLocationActivity"></activity>
     </application>
 
 </manifest>

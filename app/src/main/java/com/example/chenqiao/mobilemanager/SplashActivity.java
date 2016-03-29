@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -15,7 +16,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -121,6 +122,9 @@ public class SplashActivity extends Activity {
 
             }
         }
+
+
+            copydb();
     }
 
 
@@ -288,6 +292,39 @@ public class SplashActivity extends Activity {
 
             }
         }).start();
+
+    }
+
+
+
+    //将数据库从assets目录下 copy到 data/data/packagename/
+    private void copydb() {
+        try {
+
+            File db=new File("data/data/"+getPackageName()+"/location.db");
+            if (db.exists())
+                return;
+            final AssetManager assets = getAssets();
+            final InputStream open = assets.open("naddress.db");
+            FileOutputStream fos = new FileOutputStream(db);
+
+            byte[] bytes= new byte[1024];
+            int len=-1;
+
+            while((len=open.read(bytes,0,1024))!=-1){
+
+                fos.write(bytes,0,len);
+            }
+
+            fos.close();
+            open.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

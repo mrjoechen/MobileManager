@@ -9,7 +9,7 @@
 
     <TextView
         style="@style/myPageTile"
-        android:text="3 设置安全号码" />
+        android:text="设置安全号码" />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

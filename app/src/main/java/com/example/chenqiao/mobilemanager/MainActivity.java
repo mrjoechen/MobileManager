@@ -109,7 +109,9 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this,titles[position],Toast.LENGTH_SHORT).show();
                         break;
                     case 7:
-                        Toast.makeText(MainActivity.this,titles[position],Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MainActivity.this,titles[position],Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this,AdvanceToolActivity.class));
+
                         break;
                     case 8:
                         //Toast.makeText(MainActivity.this,titles[position],Toast.LENGTH_SHORT).show();
