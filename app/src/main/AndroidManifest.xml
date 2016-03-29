@@ -6,11 +6,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
         android:name="com.example.chenqiao.application.MyApplication"
@@ -27,12 +28,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".PhoneSafeActivity" />
-        <activity android:name=".Setup1Activity" />
-        <activity android:name=".Setup2Activity" />
-        <activity android:name=".Setup3Activity" />
-        <activity android:name=".Setup4Activity"></activity>
+        <activity android:name=".SettingActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".PhoneSafeActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Setup1Activity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Setup2Activity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Setup3Activity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".Setup4Activity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".ContactListActivity"/>
     </application>
 
 </manifest>
