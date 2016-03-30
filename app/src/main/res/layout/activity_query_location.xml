@@ -8,16 +8,19 @@
 
     <TextView
         style="@style/myPageTile"
-        android:text="离线归属地查询"/>
+        android:text="离线归属地查询"
+        android:textColor="#fff"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/et_querylocation_num"
         />
     <Button
+        android:background="@drawable/bt_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="查询"
+        android:textColor="#fff"
         android:onClick="query"/>
 
 </LinearLayout>

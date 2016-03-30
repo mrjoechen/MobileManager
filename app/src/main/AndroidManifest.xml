@@ -75,7 +75,8 @@
             android:exported="true" />
 
         <activity android:name=".AdvanceToolActivity" />
-        <activity android:name=".QueryLocationActivity"></activity>
+        <activity android:name=".QueryLocationActivity" />
+        <activity android:name=".SetToastLocationActivity"></activity>
     </application>
 
 </manifest>

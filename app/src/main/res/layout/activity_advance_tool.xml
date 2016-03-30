@@ -10,18 +10,26 @@
         style="@style/myPageTile"
         android:text="高级工具"/>
     <Button
-        android:layout_width="match_parent"
+        android:background="@drawable/bt_bg"
+        android:padding="5dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="查询手机号码归属地"
-        android:onClick="querylocation"/>
+        android:onClick="querylocation"
+        android:textColor="#fff"
+        android:layout_margin="5dp"/>
     <Button
-        android:layout_width="match_parent"
+        android:background="@drawable/bt_bg"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_margin="5dp"
+        android:textColor="#fff"
         android:text="备份短信"/>
     <Button
-        android:layout_width="match_parent"
+        android:background="@drawable/bt_bg"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:layout_margin="5dp"
+        android:textColor="#fff"
         android:text="备份联系人"/>
 </LinearLayout>
