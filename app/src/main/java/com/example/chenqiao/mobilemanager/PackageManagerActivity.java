@@ -138,7 +138,6 @@ public class PackageManagerActivity extends ActionBarActivity {
                 int num= userAppinfolist.size();
                 tv.setText("用户应用:"+num+"个");
                 tv.setTextColor(Color.BLACK);
-
                 return tv;
 
             }else if(position==userAppinfolist.size()+1){
@@ -147,7 +146,6 @@ public class PackageManagerActivity extends ActionBarActivity {
                 int num= systemAppinfolist.size();
                 tv.setText("系统应用:"+num+"个");
                 tv.setTextColor(Color.BLACK);
-
                 return tv;
 
             }
@@ -181,8 +179,6 @@ public class PackageManagerActivity extends ActionBarActivity {
 
                 item.setTag(holder);
             }
-
-
 
 
             holder.iv_applist_icon.setImageDrawable(appInfo.getIcon());
