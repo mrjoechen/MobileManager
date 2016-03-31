@@ -36,17 +36,12 @@ public class PackageManagerActivity extends ActionBarActivity {
 
         TextView  tv_pacakge_rom = (TextView) findViewById(R.id.tv_package_rom);
         TextView  tv_pacakge_sdcard = (TextView) findViewById(R.id.tv_package_sdcard);
-
         tv_pacakge_rom.setText("ROM剩余空间:\r\n"+  Formatter.formatFileSize(this, PackageUtils.getAvaliableROMSize()));
         tv_pacakge_sdcard.setText("SDCard剩余空间:\r\n" + Formatter.formatFileSize(this, PackageUtils.getAvailableSDcardSize()));
-
         tv_applist_apptype = (TextView) findViewById(R.id.tv_applist_apptype);
-
         lv_package_appinfo = (ListView) findViewById(R.id.lv_package_appinfo);
-
         userAppinfolist = new ArrayList<>();
         systemAppinfolist = new ArrayList<>();
-
         MyAsyncTast3 mytask= new MyAsyncTast3() ;
         mytask.execute();
     }
@@ -112,7 +107,6 @@ public class PackageManagerActivity extends ActionBarActivity {
 
 
     class MyAdapter extends BaseAdapter {
-
         @Override
         public int getCount() {
             return appinfolist.size();
@@ -191,7 +185,6 @@ public class PackageManagerActivity extends ActionBarActivity {
 
             return item;
         }
-
 
         class ViewHolder {
 
