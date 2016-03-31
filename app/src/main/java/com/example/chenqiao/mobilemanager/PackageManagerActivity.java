@@ -206,9 +206,4 @@ public class PackageManagerActivity extends ActionBarActivity {
     }
 
 
-    public String bytetoMega(long bytesize){
-
-
-        return Formatter.formatFileSize(this, bytesize);
-    }
 }
