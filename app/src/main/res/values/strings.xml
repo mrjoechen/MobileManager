@@ -13,4 +13,5 @@
     <string name="remote_lock">远程锁屏:*#lockscreen#*</string>
     <string name="resetup">重新进入设置向导</string>
     <string name="next">下一步</string>
+    <string name="packagemanager">软件管理</string>
 </resources>

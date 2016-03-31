@@ -26,5 +26,10 @@
         settingitem:on_string="显示来电归属地已开启"
         settingitem:off_string="显示来电归属地已关闭"
         settingitem:sp_keyname="showposition"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="settoastlocation"
+        android:text="自定义归属地提示框的位置"/>
 
 </LinearLayout>

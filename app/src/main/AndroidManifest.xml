@@ -76,7 +76,8 @@
 
         <activity android:name=".AdvanceToolActivity" />
         <activity android:name=".QueryLocationActivity" />
-        <activity android:name=".SetToastLocationActivity"></activity>
+        <activity android:name=".SetToastLocationActivity" />
+        <activity android:name=".PackageManagerActivity"></activity>
     </application>
 
 </manifest>

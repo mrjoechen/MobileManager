@@ -26,6 +26,10 @@ public class SetToastLocationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_toast_location);
 
+
+        ll_setlocation_toast.layout(MyApplication.config_sp.getInt("toastx", 0), MyApplication.config_sp.getInt("toasty", 0),MyApplication.config_sp.getInt("toastx", 0)+(int)ll_setlocation_toast.getWidth(),MyApplication.config_sp.getInt("toasty", 0)+(int)ll_setlocation_toast.getHeight());
+
+
         ll_setlocation_toast = (LinearLayout) findViewById(R.id.ll_setlocation_toast);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ll_setlocation_toast.getLayoutParams();
         layoutParams.gravity = Gravity.LEFT|Gravity.TOP;
